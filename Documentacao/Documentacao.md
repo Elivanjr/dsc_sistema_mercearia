@@ -67,7 +67,18 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 4. O sistema deve garantir a integridade dos dados durante as vendas e pagamentos.
 5. O sistema deve armazenar as senhas dos clientes cadastrados de forma segura.
 6. O sistema deve registrar um log de ações realizadas por cada usuário para fins de auditoria.
-7. O sistema deve tratar exceções sem encerrar abruptamente, registrando elas em log com data, hora e contexto da operação. (a averiguar…)
-8. O sistema deve ser tolerante a falhas durante operações internas, como registro de venda, baixa de estoque e movimentações de caixa, revertendo operações incompletas automaticamente (ACID).
+7. O sistema deve ser tolerante a falhas durante operações internas, como registro de venda, baixa de estoque e movimentações de caixa, revertendo operações incompletas automaticamente (ACID).
 
 ## 4. DETALHAMENTO DE REQUISITOS
+
+| **RF1. Cadastrar produtos por lote** |
+|:---|
+| **Descrição:**<br>O sistema deve permitir que o usuário realize o cadastro de produtos utilizando o controle por lote. Onde cada lote deve possuir identificação própria, permitindo rastreamento, controle de validade, quantidade e movimentação individual no estoque. |
+| **Fontes:**<br>Gerente do estabelecimento |
+| **Usuários:**<br>O gerente |
+| **Informações de entrada:**<br>O usuário deverá informar nome do produto, código do produto, número do lote, data de fabricação, data de vencimento, fornecedor, custo e quantidade. |
+| **Informações de saída:**<br>O sistema deverá mostrar que o cadastro foi concluído com sucesso e atualizar as informações no estoque. |
+| **Restrições lógicas:**<br>A quantidade cadastrada deverá ser maior que 0<br><br>O produto deverá ter data de validade<br><br>Não cadastrar produtos perto da data de vencimento |
+
+---
+
