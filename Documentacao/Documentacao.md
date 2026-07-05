@@ -6,7 +6,7 @@
   
    3.1. [REQUISITOS FUNCIONAIS](#31-requisitos-funcionais)
   
-   3.2. [REQUISITOS NÃO FUNCIONAIS]
+   3.2. [REQUISITOS NÃO FUNCIONAIS]](#32-requisitos-nao-funcionais)
 
 4. [DETALHATAMENTO DE REQUISITOS]
 5. [CASOS DE USO EXPANDIDOS]
@@ -59,7 +59,7 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 30. Gerar relatório de dívidas em aberto e pagamentos a prazo
 31. Exigir login com perfis distintos para operadores e gerente
 
-### 3.2 REQUISITOS NÃO FUNCIONAIS
+### 3.2. REQUISITOS NÃO FUNCIONAIS
 
 1. O sistema deve ser desenvolvido usando a linguagem Java e o banco de dados MySQL/MariaDB.
 2. O sistema deve funcionar em máquinas com no mínimo 4GB de RAM.
