@@ -1,16 +1,16 @@
 ## Sumário
 
 1. [VISÃO GERAL](#1-visão-geral)
-2. [DIAGRAMA DE ATIVIDADES]
+2. [DIAGRAMA DE ATIVIDADES](#2-diagrama-de-atividades)
 3. [LEVANTAMENTO DE REQUISITOS](#3-levantamento-de-requisitos)
-  
-   3.1. [REQUISITOS FUNCIONAIS](#31-requisitos-funcionais)
-  
-   3.2. [REQUISITOS NÃO FUNCIONAIS]](#32-requisitos-nao-funcionais)
 
-4. [DETALHATAMENTO DE REQUISITOS]
-5. [CASOS DE USO EXPANDIDOS]
-6. [DIAGRAMA DE SEQUÊNCIA]
+   3.1. [REQUISITOS FUNCIONAIS](#31-requisitos-funcionais)
+
+   3.2. [REQUISITOS NÃO FUNCIONAIS](#32-requisitos-não-funcionais)
+
+4. [DETALHAMENTO DE REQUISITOS](#4-detalhamento-de-requisitos)
+5. [CASOS DE USO EXPANDIDOS](#5-casos-de-uso-expandidos)
+6. [DIAGRAMA DE SEQUÊNCIA](#6-diagrama-de-sequência)
 
 
 ---
