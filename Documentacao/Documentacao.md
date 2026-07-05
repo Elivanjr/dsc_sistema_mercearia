@@ -70,4 +70,4 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 7. O sistema deve tratar exceções sem encerrar abruptamente, registrando elas em log com data, hora e contexto da operação. (a averiguar…)
 8. O sistema deve ser tolerante a falhas durante operações internas, como registro de venda, baixa de estoque e movimentações de caixa, revertendo operações incompletas automaticamente (ACID).
 
-## 4. DETALHATAMENTO DE REQUISITOS
+## 4. DETALHAMENTO DE REQUISITOS
