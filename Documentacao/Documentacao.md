@@ -411,7 +411,7 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 | **Restrições lógicas:**<br>- O sistema não deve permitir que um mesmo login esteja associado a mais de um usuário<br>- Alterações no perfil de um usuário deverão ser aplicadas apenas em novos acessos ao sistema |
 
 ---
-## 6. CASOS DE USO EXPANDIDOS
+## | 5. CASOS DE USO EXPANDIDOS
 | **UC01. GERENCIAR PRODUTOS - CRUD** |
 |:---|
 | **NOME DO CASO DE USO:**<br>Gerenciar produtos por Lote |
@@ -438,6 +438,47 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 | **CENÁRIO ALTERNATIVO: ATUALIZAR**<br>1. [IN] O usuário solicita a atualização de um cliente.<br>2. [OUT] O sistema solicita a identificação do cliente.<br>3. [IN] O usuário informa o cliente desejado.<br>4. [OUT] O sistema apresenta as informações atuais do cliente.<br>5. [IN] O usuário informa as alterações desejadas.<br>6. [OUT] O sistema apresenta a confirmação da atualização. [E2] |
 | **EXCEÇÃO:**<br>[E1] CPF já cadastrado: O sistema informa que o CPF informado já está cadastrado e retorna ao passo 3.<br>[E2] Cliente não encontrado: O sistema informa que o cliente não foi encontrado e retorna ao passo correspondente da operação. |
 ---
-## 7. DIAGRAMAS DE SEQUÊNCIA
+## 6. DIAGRAMAS DE SEQUÊNCIA
+
+
+## 6. DIAGRAMAS DE SEQUÊNCIA
+
+|**UC1. Gerenciar Produtos (CRUD)**|
+|:---|
+|    |  
+![UC1_Gerenciar_Produtos_MVC](/Diagramas/Diagramas_de_Sequencia/UC1_Gerenciar_Produtos_MVC.png)
+-----
+|**UC2. Gerenciar Clientes (CRUD)**|
+|:---|
+|    |  
+
+-----
+|**UC3. Realizar venda**|
+|:---|
+|    |  
+
+-----
+|**UC4. Gerenciar fiados**|
+|:---|
+|    |  
+
+---
+|**UC5. Gerenciar Caixa**|
+|:---|
+|    |  
+-----
+|**UC6. Relatório de Vendas**|
+|:---|
+|    |  
+
+-----
+|**UC7. Relatório de Estoque**|
+|:---|
+|    |  
+
+-----
+|**UC8. Relatório de fiados**|
+|:---|
+|    |  
 
 ---
