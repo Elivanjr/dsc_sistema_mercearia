@@ -12,27 +12,31 @@ import java.time.LocalDateTime;
  * @author gabriel
  */
 public class Caixa {
-    private int id;
-    private int idUsuarioAbertura;
+    private long id;
+    private long idUsuarioAbertura;
     private LocalDateTime dataHoraAbertura;
     private LocalDateTime dataHoraFechamento;
     private Double valorTrocoInicial;
     private StatusCaixa statusCaixa;
     private Double saldoMinimoProximoDia;
 
-    public int getId() {
+    public void setStatusCaixa(StatusCaixa statusCaixa) {
+        this.statusCaixa = statusCaixa;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getIdUsuarioAbertura() {
+    public long getIdUsuarioAbertura() {
         return idUsuarioAbertura;
     }
 
-    public void setIdUsuarioAbertura(int idUsuarioAbertura) {
+    public void setIdUsuarioAbertura(long idUsuarioAbertura) {
         this.idUsuarioAbertura = idUsuarioAbertura;
     }
 
@@ -64,15 +68,19 @@ public class Caixa {
         return statusCaixa;
     }
 
-    public void setStatusCaixa(StatusCaixa statusCaixa) {
-        this.statusCaixa = statusCaixa;
-    }
-
     public Double getSaldoMinimoProximoDia() {
         return saldoMinimoProximoDia;
     }
 
     public void setSaldoMinimoProximoDia(Double saldoMinimoProximoDia) {
         this.saldoMinimoProximoDia = saldoMinimoProximoDia;
+    }
+    
+    public boolean estaAberto(){
+        return this.statusCaixa == StatusCaixa.ABERTO;
+    }
+    
+    public void fechar(){
+        this.statusCaixa = StatusCaixa.FECHADO;
     }
 }

@@ -15,17 +15,17 @@ import java.util.List;
  * @author gabriel
  */
 public class Venda {
-    private int id;
+    private long id;
     private LocalDateTime dataHora;
-    private int idUsuario;
-    private int idCliente;
-    private int idCaixa;
+    private long idUsuario;
+    private long idCliente;
+    private long idCaixa;
     private Double valorTotal;
     private FormaPagamento formaDePagamento;
     private StatusVenda status;
     private List<ItemVenda> itens;
 
-    public Venda(int idUsuario, int idCliente, int idCaixa) {
+    public Venda(long idUsuario, long idCliente, long idCaixa) {
         this.idUsuario = idUsuario;
         this.idCliente = idCliente;
         this.idCaixa = idCaixa;
@@ -34,7 +34,7 @@ public class Venda {
         this.itens = new ArrayList<>();
     }
 
-    public Venda(int id, LocalDateTime dataHora, int idUsuario, int idCliente, int idCaixa, Double valorTotal, FormaPagamento formaDePagamento, StatusVenda status, List<ItemVenda> itens) {
+    public Venda(long id, LocalDateTime dataHora, long idUsuario, long idCliente, long idCaixa, Double valorTotal, FormaPagamento formaDePagamento, StatusVenda status, List<ItemVenda> itens) {
         this.id = id;
         this.dataHora = dataHora;
         this.idUsuario = idUsuario;
@@ -54,27 +54,27 @@ public class Venda {
         this.valorTotal = valorTotal;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
-    public int getIdCaixa() {
+    public long getIdCaixa() {
         return idCaixa;
     }
 
-    public void setIdCaixa(int idCaixa) {
+    public void setIdCaixa(long idCaixa) {
         this.idCaixa = idCaixa;
     }
 
@@ -94,11 +94,11 @@ public class Venda {
         this.itens = itens;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -117,4 +117,19 @@ public class Venda {
     public void setFormaDePagamento(FormaPagamento formaDePagamento) {
         this.formaDePagamento = formaDePagamento;
     } 
+    
+    public Double calcularSubtotalFinal(){
+        Double valor = 0.0;
+        for(ItemVenda item : this.itens)
+            valor += item.getSubtotal();
+        return valor;
+    }
+    
+    public void cancelarVenda(){
+        this.status = StatusVenda.CANCELADA;
+    }
+    
+    public boolean estaConcluida(){
+        return this.status == StatusVenda.CONCLUIDA;
+    }
 }

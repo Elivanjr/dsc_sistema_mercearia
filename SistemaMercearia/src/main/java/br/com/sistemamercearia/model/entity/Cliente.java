@@ -9,8 +9,8 @@ package br.com.sistemamercearia.model.entity;
  * @author gabriel
  */
 public class Cliente {
-    private int id;
-    private int diaVencimentoFiado;
+    private long id;
+    private long diaVencimentoFiado;
     private String nome;
     private String cpf;
     private String endereco;
@@ -18,29 +18,6 @@ public class Cliente {
     private String senha;
     private Double limiteDeCredito;
     private boolean statusBloqueio;
-    
-    public Cliente(int diaVencimentoFiado, String nome, String cpf, String endereco, String telefone, String senha, Double limiteDeCredito, boolean statusBloqueio) {
-        this.diaVencimentoFiado = diaVencimentoFiado;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.senha = senha;
-        this.limiteDeCredito = limiteDeCredito;
-        this.statusBloqueio = statusBloqueio;
-    }
-
-    public Cliente(int id, int diaVencimentoFiado, String nome, String cpf, String endereco, String telefone, String senha, Double limiteDeCredito, boolean statusBloqueio) {
-        this.id = id;
-        this.diaVencimentoFiado = diaVencimentoFiado;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.senha = senha;
-        this.limiteDeCredito = limiteDeCredito;
-        this.statusBloqueio = statusBloqueio;
-    }
 
     public boolean isStatusBloqueio() {
         return statusBloqueio;
@@ -50,19 +27,19 @@ public class Cliente {
         this.statusBloqueio = statusBloqueio;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     
-    public int getDiaVencimentoFiado() {
+    public long getDiaVencimentoFiado() {
         return diaVencimentoFiado;
     }
 
-    public void setDiaVencimentoFiado(int diaVencimentoFiado) {
+    public void setDiaVencimentoFiado(long diaVencimentoFiado) {
         this.diaVencimentoFiado = diaVencimentoFiado;
     }
 
@@ -121,4 +98,11 @@ public class Cliente {
     public void desbloquearConta(){
         this.statusBloqueio = false;
     }
+    
+    public boolean possuiSenhaCadastrada(){
+        return this.senha != null && !this.senha.isBlank();
+    }
+    
+    //falta implementar...
+    //public boolean verificarSenha(String senhaInformada)
 }

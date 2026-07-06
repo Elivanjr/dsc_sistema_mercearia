@@ -13,8 +13,8 @@ import java.time.temporal.ChronoUnit;
  * @author gabriel
  */
 public class Produto {
-    private int id;
-    private int quantidadeDisponivel;
+    private long id;
+    private long quantidadeDisponivel;
     private String descricao;
     private String codigoDeBarras;
     private String lote;
@@ -23,31 +23,6 @@ public class Produto {
     private LocalDate dataVencimento;
     private Double precoUnitario;
     private Double quantidadeMedida;
-
-    public Produto(int quantidadeDisponivel, String descricao, String codigoDeBarras, String lote, UnidadeDeMedida unidadeDeMedida, LocalDate dataFabricacao, LocalDate dataVencimento, Double precoUnitario, Double quantidadeMedida) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
-        this.descricao = descricao;
-        this.codigoDeBarras = codigoDeBarras;
-        this.lote = lote;
-        this.unidadeDeMedida = unidadeDeMedida;
-        this.dataFabricacao = dataFabricacao;
-        this.dataVencimento = dataVencimento;
-        this.precoUnitario = precoUnitario;
-        this.quantidadeMedida = quantidadeMedida;
-    }
-
-    public Produto(int id, int quantidadeDisponivel, String descricao, String codigoDeBarras, String lote, UnidadeDeMedida unidadeDeMedida, LocalDate dataFabricacao, LocalDate dataVencimento, Double precoUnitario, Double quantidadeMedida) {
-        this.id = id;
-        this.quantidadeDisponivel = quantidadeDisponivel;
-        this.descricao = descricao;
-        this.codigoDeBarras = codigoDeBarras;
-        this.lote = lote;
-        this.unidadeDeMedida = unidadeDeMedida;
-        this.dataFabricacao = dataFabricacao;
-        this.dataVencimento = dataVencimento;
-        this.precoUnitario = precoUnitario;
-        this.quantidadeMedida = quantidadeMedida;
-    }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;
@@ -65,19 +40,19 @@ public class Produto {
         this.lote = lote;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getQuantidadeDisponivel() {
+    public long getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
 
-    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+    public void setQuantidadeDisponivel(long quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
@@ -133,18 +108,22 @@ public class Produto {
         return !dataAtual.isAfter(this.dataVencimento);
     }
     
-    public boolean temEstoque(int quantidadeDesejada){
-        if (quantidadeDesejada <= 0) throw new IllegalArgumentException("A quantidade desejada deve ser maior que zero.");
-        
-        return quantidadeDesejada <= this.quantidadeDisponivel;
+    public boolean temEstoque(long quantidadeDesejada){
+        return quantidadeDesejada >0 && quantidadeDesejada <= this.quantidadeDisponivel;
     }
     
-    public boolean estaProximoDoVencimento(int diasLimite, LocalDate dataAtual){
+    public boolean estaProximoDoVencimento(long diasLimite, LocalDate dataAtual){
         return ChronoUnit.DAYS.between(dataAtual, this.dataVencimento) > diasLimite;
     }
     
-    public void debitarEstoque(int quantidadeDesejada){
-        //if(!this.temEstoque(quantidadeDesejada))
+    public void debitarEstoque(long quantidadeDesejada){
+        if (quantidadeDesejada <= 0)
+            throw new IllegalArgumentException("A quantidade desejada deve ser maior que zero.");
+        
+        if(!this.temEstoque(quantidadeDesejada))
+            throw new IllegalArgumentException("Estoque indisponível.");
+        
+        this.quantidadeDisponivel -= quantidadeDesejada;
         
     }
 }

@@ -7,42 +7,61 @@ package br.com.sistemamercearia.model.entity;
 import br.com.sistemamercearia.model.enums.StatusNotaFiado;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
  * @author gabriel
  */
 public class NotaFiado {
-    private int id;
-    private int idCliente;
-    private int idVenda;
+    private long id;
+    private long idCliente;
+    private long idVenda;
     private LocalDateTime dataHoraEmissao;
     private LocalDate dataVencimento;
+    private Double multa;
+    private Double valorOriginal;
     private Double saldoDevedor;
     private String nomeTerceiro;
     private StatusNotaFiado statusNota;
 
-    public int getId() {
+    public Double getMulta() {
+        return multa;
+    }
+
+    public void setMulta(Double multa) {
+        this.multa = multa;
+    }
+
+    public Double getValorOriginal() {
+        return valorOriginal;
+    }
+
+    public void setValorOriginal(Double valorOriginal) {
+        this.valorOriginal = valorOriginal;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
-    public int getIdVenda() {
+    public long getIdVenda() {
         return idVenda;
     }
 
-    public void setIdVenda(int idVenda) {
+    public void setIdVenda(long idVenda) {
         this.idVenda = idVenda;
     }
 
@@ -86,4 +105,21 @@ public class NotaFiado {
         this.statusNota = statusNota;
     }
     
+    public void abaterSaldo(Double valorPago){
+        if(valorPago <= 0)
+            throw new IllegalArgumentException("O valor pago deve ser maior que R$ 0,00.");
+        
+        this.saldoDevedor -= valorPago;
+        
+        if(this.saldoDevedor == 0.0)
+            this.setStatusNota(StatusNotaFiado.PAGA);
+    }
+    
+    public boolean estaAtrasada(LocalDate dataAtual){
+        return this.statusNota == StatusNotaFiado.PENDENTE && dataAtual.isAfter(this.dataVencimento);
+    }
+    
+    public long diasEmAtraso(LocalDate dataAtual){
+        return ChronoUnit.DAYS.between(this.dataVencimento, dataAtual);
+    }
 }

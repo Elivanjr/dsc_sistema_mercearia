@@ -13,27 +13,27 @@ import java.time.LocalDateTime;
  * @author gabriel
  */
 public class MovimentacaoCaixa {
-    private int id;
-    private int idCaixa;
+    private long id;
+    private long idCaixa;
     private TipoMovimentacao tipoMovimentacao;
     private Double valor;   
     private String descricao;
     private LocalDateTime dataHoraMovimentacao;
     private OrigemMovimentacao origem;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getIdCaixa() {
+    public long getIdCaixa() {
         return idCaixa;
     }
 
-    public void setIdCaixa(int idCaixa) {
+    public void setIdCaixa(long idCaixa) {
         this.idCaixa = idCaixa;
     }
 

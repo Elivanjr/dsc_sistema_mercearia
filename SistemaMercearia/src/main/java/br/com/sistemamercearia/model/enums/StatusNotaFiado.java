@@ -10,6 +10,5 @@ package br.com.sistemamercearia.model.enums;
  */
 public enum StatusNotaFiado {
     PENDENTE,
-    PAGA,
-    ATRASADA
+    PAGA
 }
