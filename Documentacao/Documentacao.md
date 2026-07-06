@@ -451,34 +451,35 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 |**UC2. Gerenciar Clientes (CRUD)**|
 |:---|
 |    |  
-
+![UC2_Gerenciar_Clientes_MVC](Diagramas/Diagramas_de_Sequencia/UC2_Gerenciar_Clientes_MVC.png)
 -----
 |**UC3. Realizar venda**|
 |:---|
 |    |  
-
+![UC3_Realizar_Venda_MVC](Diagramas/Diagramas_de_Sequencia/UC3_Realizar_Venda_MVC.png)
 -----
 |**UC4. Gerenciar fiados**|
 |:---|
 |    |  
-
+![UC4_Gerenciar_Fiados_MVC](Diagramas/Diagramas_de_Sequencia/UC4_Gerenciar_Fiados_MVC.png)
 ---
 |**UC5. Gerenciar Caixa**|
 |:---|
-|    |  
+|    |
+![UC5_Gerenciar_Caixa_MVC](Diagramas/Diagramas_de_Sequencia/UC5_Gerenciar_Caixa_MVC.png)
 -----
 |**UC6. Relatório de Vendas**|
 |:---|
 |    |  
-
+![UC6_Relatorio_Vendas_MVC](Diagramas/Diagramas_de_Sequencia/UC6_Relatorio_Vendas_MVC.png)
 -----
 |**UC7. Relatório de Estoque**|
 |:---|
 |    |  
-
+![UC7_Relatorio_Estoque_MVC](Diagramas/Diagramas_de_Sequencia/UC7_Relatorio_Estoque_MVC.png)
 -----
 |**UC8. Relatório de fiados**|
 |:---|
-|    |  
-
+|    |
+![UC8_Relatorio_Fiados_MVC](Diagramas/Diagramas_de_Sequencia/UC8_Relatorio_Fiados_MVC.png)
 ---
