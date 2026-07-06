@@ -12,50 +12,44 @@ import java.time.LocalDateTime;
  */
 public class LogAuditoria {
     private int id;
-    private int id_usuario;
-    private String acao;
-    private String descricao;
-    private LocalDateTime dataHora;
+    private final int idUsuario;
+    private final String acao;
+    private final String descricao;
+    private final LocalDateTime dataHora;
+    
+    public LogAuditoria(int idUsuario, String acao, String descricao){
+        this.idUsuario = idUsuario;
+        this.acao = acao;
+        this.descricao = descricao;
+        this.dataHora = LocalDateTime.now();
+        
+    }
+    
+    public LogAuditoria(int idUsuario, String acao, String descricao, LocalDateTime dataHora){
+        this.idUsuario = idUsuario;
+        this.acao = acao;
+        this.descricao = descricao;
+        this.dataHora = dataHora;
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
     public String getAcao() {
         return acao;
     }
 
-    public void setAcao(String acao) {
-        this.acao = acao;
-    }
-
     public String getDescricao() {
         return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public LocalDateTime getDataHora() {
         return dataHora;
     }
-
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-    
     
 }

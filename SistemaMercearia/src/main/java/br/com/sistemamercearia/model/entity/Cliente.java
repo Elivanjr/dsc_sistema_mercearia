@@ -10,13 +10,45 @@ package br.com.sistemamercearia.model.entity;
  */
 public class Cliente {
     private int id;
+    private int diaVencimentoFiado;
     private String nome;
     private String cpf;
     private String endereco;
     private String telefone;
     private String senha;
     private Double limiteDeCredito;
-    private boolean ativo;
+    private boolean statusBloqueio;
+    
+    public Cliente(int diaVencimentoFiado, String nome, String cpf, String endereco, String telefone, String senha, Double limiteDeCredito, boolean statusBloqueio) {
+        this.diaVencimentoFiado = diaVencimentoFiado;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.senha = senha;
+        this.limiteDeCredito = limiteDeCredito;
+        this.statusBloqueio = statusBloqueio;
+    }
+
+    public Cliente(int id, int diaVencimentoFiado, String nome, String cpf, String endereco, String telefone, String senha, Double limiteDeCredito, boolean statusBloqueio) {
+        this.id = id;
+        this.diaVencimentoFiado = diaVencimentoFiado;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.senha = senha;
+        this.limiteDeCredito = limiteDeCredito;
+        this.statusBloqueio = statusBloqueio;
+    }
+
+    public boolean isStatusBloqueio() {
+        return statusBloqueio;
+    }
+
+    public void setStatusBloqueio(boolean statusBloqueio) {
+        this.statusBloqueio = statusBloqueio;
+    }
 
     public int getId() {
         return id;
@@ -24,6 +56,14 @@ public class Cliente {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public int getDiaVencimentoFiado() {
+        return diaVencimentoFiado;
+    }
+
+    public void setDiaVencimentoFiado(int diaVencimentoFiado) {
+        this.diaVencimentoFiado = diaVencimentoFiado;
     }
 
     public String getNome() {
@@ -73,12 +113,12 @@ public class Cliente {
     public void setLimiteDeCredito(Double limiteDeCredito) {
         this.limiteDeCredito = limiteDeCredito;
     }
-
-    public boolean isAtivo() {
-        return ativo;
+    
+    public void bloquearConta(){
+        this.statusBloqueio = true;
     }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
+    
+    public void desbloquearConta(){
+        this.statusBloqueio = false;
     }
 }

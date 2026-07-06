@@ -57,4 +57,8 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    public boolean isGerente(){
+        return this.perfilUsuario == PerfilUsuario.GERENTE;
+    }
 }
