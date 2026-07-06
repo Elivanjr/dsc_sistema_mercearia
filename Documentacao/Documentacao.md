@@ -446,7 +446,7 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 |**UC1. Gerenciar Produtos (CRUD)**|
 |:---|
 |    |  
-![UC1_Gerenciar_Produtos_MVC](/Diagramas/Diagramas_de_Sequencia/UC1_Gerenciar_Produtos_MVC.png)
+![UC1_Gerenciar_Produtos_MVC](Diagramas/Diagramas_de_Sequencia/UC1_Gerenciar_Produtos_MVC.png)
 -----
 |**UC2. Gerenciar Clientes (CRUD)**|
 |:---|
