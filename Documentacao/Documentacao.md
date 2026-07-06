@@ -10,7 +10,7 @@
 
 4. [DETALHAMENTO DE REQUISITOS](#4-detalhamento-de-requisitos)
 5. [CASOS DE USO EXPANDIDOS](#5-casos-de-uso-expandidos)
-6. [DIAGRAMA DE SEQUÊNCIA](#6-diagrama-de-sequência)
+6. [DIAGRAMAS DE SEQUÊNCIA](#6-diagramas-de-sequência)
 
 
 ---
@@ -410,3 +410,34 @@ Este projeto propõe um sistema de gestão para minimercados focando em controle
 | **Informações de saída:**<br>O sistema deve autenticar o usuário e conceder acesso a funcionalidades referente a posição do usuário no estabelecimento. |
 | **Restrições lógicas:**<br>- O sistema não deve permitir que um mesmo login esteja associado a mais de um usuário<br>- Alterações no perfil de um usuário deverão ser aplicadas apenas em novos acessos ao sistema |
 
+---
+## 6. CASOS DE USO EXPANDIDOS
+| **UC01. GERENCIAR PRODUTOS - CRUD** |
+|:---|
+| **NOME DO CASO DE USO:**<br>Gerenciar produtos por Lote |
+| **ATOR:**<br>Gerente |
+| **OBJETIVO:**<br>Permitir o cadastro de novos produtos por lote no sistema. |
+| **PRÉ-CONDIÇÕES:**<br>1. O gerente deve estar autenticado no sistema.<br>2. O sistema deve estar operacional. |
+| **PÓS-CONDIÇÕES:**<br>O produto é registrado no sistema e fica disponível para operações de consulta, atualização, remoção e venda. |
+| **CENÁRIO PRINCIPAL:**<br>1. [IN] O gerente solicita o cadastro de um produto.<br>2. [OUT] O sistema solicita as informações do produto.<br>3. [IN] O gerente informa: nome do produto, código do produto, número do lote, data de fabricação, data de vencimento, fornecedor, preço unitário, unidade de medida e quantidade do produto.<br>4. [OUT] O sistema registra o produto e disponibiliza seu identificador único. [E1] |
+| **CENÁRIO ALTERNATIVO: CONSULTAR**<br>1. [IN] O gerente solicita a consulta de um produto.<br>2. [OUT] O sistema solicita um critério de consulta.<br>3. [IN] O gerente informa um critério de identificação do produto.<br>4. [OUT] O sistema apresenta as informações do produto. [E2] |
+| **CENÁRIO ALTERNATIVO: ATUALIZAR**<br>1. [IN] O gerente solicita a atualização de um produto.<br>2. [OUT] O sistema solicita a identificação do produto.<br>3. [IN] O gerente informa o produto desejado.<br>4. [OUT] O sistema apresenta as informações atuais do produto.<br>5. [IN] O gerente informa as alterações desejadas.<br>6. [OUT] O sistema apresenta a confirmação da atualização. [E2] |
+| **CENÁRIO ALTERNATIVO: REMOVER**<br>1. [IN] O gerente solicita a remoção de um lote.<br>2. [OUT] O sistema solicita a identificação do lote.<br>3. [IN] O gerente informa o lote desejado.<br>4. [OUT] O sistema apresenta as informações do lote.<br>5. [IN] O gerente confirma a remoção.<br>6. [OUT] O sistema apresenta a confirmação da remoção. [E2] |
+| **EXCEÇÃO:**<br>[E1] Produto próximo da data de vencimento: O sistema informa que produtos próximos do vencimento não podem ser cadastrados. O caso de uso é abortado.<br>[E2] Produto não encontrado: O sistema informa que o produto não foi encontrado e retorna ao passo correspondente da operação. |
+
+
+| **UC02. GERENCIAR CLIENTES** - CRUD |
+|:---|
+| **NOME DO CASO DE USO:**<br>Gerenciar clientes |
+| **ATOR:**<br>Gerente, Atendente |
+| **OBJETIVO:**<br> Permitir o cadastro de clientes aptos à realização de compras a prazo (fiado). |
+| **PRÉ-CONDIÇÕES:**<br>1. O usuário deve estar autenticado no sistema.<br>2. O sistema deve estar operacional. |
+| **PÓS-CONDIÇÕES:**<br>O cliente é registrado no sistema e fica disponível para consultas, atualizações e operações de fiado. |
+| **CENÁRIO PRINCIPAL:**<br>1. [IN] O usuário solicita o cadastro de um cliente.<br>2. [OUT] O sistema solicita as informações do cliente.<br>3. [IN] O usuário informa: nome, CPF, telefone, endereço, dia de vencimento e senha.<br>4. [OUT] O sistema registra o cliente e apresenta a confirmação do cadastro. [E1] |
+| **CENÁRIO ALTERNATIVO: CONSULTAR**<br>1. [IN] O usuário solicita a consulta de um cliente.<br>2. [OUT] O sistema solicita um critério de consulta.<br>3. [IN] O usuário informa o nome ou CPF do cliente.<br>4. [OUT] O sistema apresenta as informações do cliente. [E2] |
+| **CENÁRIO ALTERNATIVO: ATUALIZAR**<br>1. [IN] O usuário solicita a atualização de um cliente.<br>2. [OUT] O sistema solicita a identificação do cliente.<br>3. [IN] O usuário informa o cliente desejado.<br>4. [OUT] O sistema apresenta as informações atuais do cliente.<br>5. [IN] O usuário informa as alterações desejadas.<br>6. [OUT] O sistema apresenta a confirmação da atualização. [E2] |
+| **EXCEÇÃO:**<br>[E1] CPF já cadastrado: O sistema informa que o CPF informado já está cadastrado e retorna ao passo 3.<br>[E2] Cliente não encontrado: O sistema informa que o cliente não foi encontrado e retorna ao passo correspondente da operação. |
+---
+## 7. DIAGRAMAS DE SEQUÊNCIA
+
+---
