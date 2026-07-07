@@ -4,6 +4,8 @@
  */
 package br.com.sistemamercearia.model.entity;
 
+import br.com.sistemamercearia.util.CriptografiaUtil;
+
 /**
  *
  * @author gabriel
@@ -80,7 +82,7 @@ public class Cliente {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.senha = CriptografiaUtil.gerarHash(senha);
     }
 
     public Double getLimiteDeCredito() {
@@ -103,6 +105,7 @@ public class Cliente {
         return this.senha != null && !this.senha.isBlank();
     }
     
-    //falta implementar...
-    //public boolean verificarSenha(String senhaInformada)
+    public boolean verificarSenha(String senhaInformada){
+        return CriptografiaUtil.senhaCorreta(senhaInformada, this.senha);
+    }
 }
