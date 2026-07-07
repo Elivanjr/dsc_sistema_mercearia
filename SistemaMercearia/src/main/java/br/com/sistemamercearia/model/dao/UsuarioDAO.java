@@ -25,21 +25,21 @@ public class UsuarioDAO {
     connection = DatabaseConnection.getConnection();
   }
 
-  public Usuario salvar(Usuario usuario) throws SQLException {
-    if (usuario.getId() == 0) {
-      String sql = "INSERT INTO Usuario (id_usuario, nome, login, senha, perfil) VALUES (?, ?, ?, ?, ?)";
-
-      try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-        stmt.setLong(1, usuario.getId());
-        stmt.setString(2, usuario.getNome());
-        stmt.setString(3, usuario.getLogin());
-        stmt.setString(4, usuario.getSenha());
-        stmt.setString(5, usuario.getPerfilUsuario().name());
-
-        stmt.executeUpdate();
-      }
+  public void salvar(Usuario usuario) throws SQLException {
+    if (usuario == null) {
+      throw new IllegalArgumentException("Usuário não pode ser nulo!");
     }
-    return usuario;
+
+    String sql = "INSERT INTO Usuario (nome, login, senha, perfil) VALUES (?, ?, ?, ?)";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+      stmt.setString(1, usuario.getNome());
+      stmt.setString(2, usuario.getLogin());
+      stmt.setString(3, usuario.getSenha());
+      stmt.setString(4, usuario.getPerfilUsuario().name());
+
+      stmt.executeUpdate();
+    }
   }
 
   public Usuario buscarPorLogin(String login) throws SQLException {
@@ -51,8 +51,7 @@ public class UsuarioDAO {
       try (ResultSet rs = stmt.executeQuery()) {
         if (rs.next()) {
           Usuario usuario = new Usuario();
-
-          usuario.setId(rs.getLong("id_usuario"));
+          usuario.setId(rs.getLong("id"));
           usuario.setNome(rs.getString("nome"));
           usuario.setLogin(rs.getString("login"));
           usuario.setSenha(rs.getString("senha"));
@@ -64,5 +63,9 @@ public class UsuarioDAO {
     }
 
     return null;
+  }
+
+  public void fecharConexao() {
+    DatabaseConnection.closeConnection(connection);
   }
 }

@@ -29,7 +29,7 @@ public class ProdutoDAO {
     this.connection = DatabaseConnection.getConnection();
   }
 
-  public void salvar(Produto produto) throws SQLException {
+  public void salvar(Produto produto) {
     String sql = """
         INSERT INTO Produto
         (quantidade_disponivel, descricao, codigo_de_barras, lote,
@@ -55,7 +55,7 @@ public class ProdutoDAO {
     }
   }
 
-  public Produto buscarPorCodigoELote(String codigo, String lote) throws SQLException {
+  public Produto buscarPorCodigoELote(String codigo, String lote) {
     String sql = "SELECT * FROM Produto WHERE codigo_de_barras = ? AND lote = ?";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -67,11 +67,13 @@ public class ProdutoDAO {
           return mapearProduto(rs);
         }
       }
+    } catch (SQLException e) {
+      throw new RuntimeException("Erro ao buscar produto", e);
     }
     return null;
   }
 
-  public void atualizarEstoque(long idProduto, long qtdVendida) throws SQLException {
+  public void atualizarEstoque(long idProduto, long qtdVendida) {
     String sql = "UPDATE Produto SET quantidade_disponivel = quantidade_disponivel - ? WHERE id = ?";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -83,7 +85,7 @@ public class ProdutoDAO {
     }
   }
 
-  public List<Produto> listarProdutosBaixoEstoque() throws SQLException {
+  public List<Produto> listarProdutosBaixoEstoque() {
     List<Produto> produtos = new ArrayList<>();
     String sql = """
         SELECT * FROM Produto
@@ -106,7 +108,7 @@ public class ProdutoDAO {
     return produtos;
   }
 
-  public List<Produto> listarProdutosProximosVencimento() throws SQLException {
+  public List<Produto> listarProdutosProximosVencimento() {
     List<Produto> produtos = new ArrayList<>();
     String sql = """
         SELECT * FROM Produto
@@ -144,5 +146,9 @@ public class ProdutoDAO {
     produto.setQuantidadeMedida(rs.getDouble("quantidade_medida"));
 
     return produto;
+  }
+
+  public void fecharConexao() {
+    DatabaseConnection.closeConnection(connection);
   }
 }
