@@ -13,28 +13,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Statement;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author elivan
  */
 public class VendaDAO {
 
-    /**
-     * @param venda
-     * @param itens
-     * @throws SQLException
-     * @throws IllegalArgumentException
-     */
-    public void salvarVendaCompleta(Venda venda, List<ItemVenda> itens)
-            throws SQLException, IllegalArgumentException {
+    private Connection connection;
+
+    public VendaDAO() {
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
+        }
+    }
+
+    public void salvarVendaCompleta(Venda venda, List<ItemVenda> itens) {
 
         if (venda == null) {
-            throw new IllegalArgumentException("Venda não pode ser nula!");
+            throw new IllegalArgumentException("Venda não pode ser nula.");
         }
+
         if (itens == null || itens.isEmpty()) {
-            throw new IllegalArgumentException("Venda deve ter pelo menos um item!");
+            throw new IllegalArgumentException("Venda deve possuir ao menos um item.");
         }
 
         String sqlVenda = """
@@ -51,114 +55,72 @@ public class VendaDAO {
                 VALUES (?, ?, ?, ?, ?)
                 """;
 
-        Connection connection = null;
-        PreparedStatement stmtVenda = null;
-        PreparedStatement stmtItem = null;
-        ResultSet rs = null;
-
         try {
-            connection = DatabaseConnection.getConnection();
 
             connection.setAutoCommit(false);
 
             long idVenda;
 
-            stmtVenda = connection.prepareStatement(
-                    sqlVenda,
-                    PreparedStatement.RETURN_GENERATED_KEYS);
+            try (PreparedStatement stmtVenda = connection.prepareStatement(
+                    sqlVenda, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmtVenda.setTimestamp(1, Timestamp.valueOf(venda.getDataHora()));
-            stmtVenda.setLong(2, venda.getIdUsuario());
-            stmtVenda.setLong(3, venda.getIdCliente());
-            stmtVenda.setLong(4, venda.getIdCaixa());
-            stmtVenda.setDouble(5, venda.getValorTotal());
-            stmtVenda.setString(6, venda.getFormaDePagamento().name());
-            stmtVenda.setString(7, venda.getStatus().name());
+                stmtVenda.setTimestamp(1, Timestamp.valueOf(venda.getDataHora()));
+                stmtVenda.setLong(2, venda.getIdUsuario());
+                stmtVenda.setLong(3, venda.getIdCliente());
+                stmtVenda.setLong(4, venda.getIdCaixa());
+                stmtVenda.setDouble(5, venda.getValorTotal());
+                stmtVenda.setString(6, venda.getFormaDePagamento().name());
+                stmtVenda.setString(7, venda.getStatus().name());
 
-            stmtVenda.executeUpdate();
+                stmtVenda.executeUpdate();
 
-            rs = stmtVenda.getGeneratedKeys();
-            if (rs.next()) {
-                idVenda = rs.getLong(1);
-            } else {
-                throw new SQLException("Não foi possível obter o ID da venda gerado pelo banco.");
-            }
+                try (ResultSet rs = stmtVenda.getGeneratedKeys()) {
 
-            if (rs != null) {
-                rs.close();
-                rs = null;
-            }
+                    if (!rs.next()) {
+                        throw new SQLException("Não foi possível obter o ID da venda.");
+                    }
 
-            stmtItem = connection.prepareStatement(sqlItem);
-
-            for (ItemVenda item : itens) {
-                stmtItem.setLong(1, idVenda);
-                stmtItem.setLong(2, item.getIdProduto());
-                stmtItem.setLong(3, item.getQuantidade());
-                stmtItem.setDouble(4, item.getPrecoUnitario());
-                stmtItem.setDouble(5, item.getSubtotal());
-
-                stmtItem.addBatch();
-            }
-
-            // Executa TODOS os inserts de uma vez (BATCH)
-            int[] resultados = stmtItem.executeBatch();
-
-            // Valida se todos os inserts funcionaram
-            for (int resultado : resultados) {
-                if (resultado < 0 && resultado != PreparedStatement.SUCCESS_NO_INFO) {
-                    throw new SQLException("Erro ao inserir item de venda!");
+                    idVenda = rs.getLong(1);
                 }
+            }
+
+            try (PreparedStatement stmtItem = connection.prepareStatement(sqlItem)) {
+
+                for (ItemVenda item : itens) {
+                    stmtItem.setLong(1, idVenda);
+                    stmtItem.setLong(2, item.getIdProduto());
+                    stmtItem.setLong(3, item.getQuantidade());
+                    stmtItem.setDouble(4, item.getPrecoUnitario());
+                    stmtItem.setDouble(5, item.getSubtotal());
+
+                    stmtItem.addBatch();
+                }
+
+                stmtItem.executeBatch();
             }
 
             connection.commit();
 
         } catch (SQLException e) {
+
             if (connection != null) {
                 try {
                     connection.rollback();
-                    System.err.println("Transação revertida por erro: " + e.getMessage());
-                } catch (SQLException rollbackEx) {
-                    System.err.println("ERRO CRÍTICO ao fazer rollback: " + rollbackEx.getMessage());
-                    rollbackEx.printStackTrace();
+                } catch (SQLException ex) {
+                    throw new RuntimeException("Erro ao realizar rollback.", ex);
                 }
             }
-            throw e;
+
+            throw new RuntimeException("Erro ao salvar venda completa.", e);
 
         } finally {
-
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    System.err.println("Erro ao fechar ResultSet: " + e.getMessage());
-                }
-            }
-
-            if (stmtVenda != null) {
-                try {
-                    stmtVenda.close();
-                } catch (SQLException e) {
-                    System.err.println("Erro ao fechar stmtVenda: " + e.getMessage());
-                }
-            }
-
-            if (stmtItem != null) {
-                try {
-                    stmtItem.close();
-                } catch (SQLException e) {
-                    System.err.println("Erro ao fechar stmtItem: " + e.getMessage());
-                }
-            }
 
             if (connection != null) {
                 try {
                     connection.setAutoCommit(true);
                 } catch (SQLException e) {
-                    System.err.println("Erro ao reabilitar autocommit: " + e.getMessage());
+                    throw new RuntimeException("Erro ao restaurar AutoCommit.", e);
                 }
-
-                fecharConexao();
             }
         }
     }
