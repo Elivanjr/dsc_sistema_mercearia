@@ -24,11 +24,15 @@ import java.util.List;
 public class LogAuditoriaDAO {
   private Connection connection;
 
-  public LogAuditoriaDAO() throws SQLException {
-    connection = DatabaseConnection.getConnection();
+  public LogAuditoriaDAO() {
+    try {
+      connection = DatabaseConnection.getConnection();
+    } catch (SQLException e) {
+      throw new RuntimeException("Erro ao conectar ao banco de dados", e);
+    }
   }
 
-  public void inserirLog(LogAuditoria log) throws SQLException {
+  public void inserirLog(LogAuditoria log) {
     String sql = "INSERT INTO LogAuditoria (id_usuario, acao, descricao, data_hora) VALUES (?, ?, ?, ?)";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -39,10 +43,12 @@ public class LogAuditoriaDAO {
 
       stmt.executeUpdate();
 
+    } catch (SQLException e) {
+      throw new RuntimeException("Erro ao inserir log", e);
     }
   }
 
-  public List<LogAuditoria> listarLogsPorPeriodo(LocalDateTime inicio, LocalDateTime fim) throws SQLException {
+  public List<LogAuditoria> listarLogsPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
     List<LogAuditoria> logs = new ArrayList<>();
 
     String sql = "SELECT * FROM LogAuditoria WHERE data_hora BETWEEN ? AND ? ORDER BY data_hora";
@@ -63,7 +69,13 @@ public class LogAuditoriaDAO {
           logs.add(log);
         }
       }
+    } catch (SQLException e) {
+      throw new RuntimeException("Erro ao listar logs", e);
     }
     return logs;
+  }
+
+  public void fecharConexao() {
+    DatabaseConnection.closeConnection(connection);
   }
 }
