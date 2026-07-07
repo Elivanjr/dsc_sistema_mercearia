@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
  */
 public class LogAuditoria {
     private int id;
-    private final int idUsuario;
+    private final long idUsuario;
     private final String acao;
     private final String descricao;
     private final LocalDateTime dataHora;
     
-    public LogAuditoria(int idUsuario, String acao, String descricao){
+    public LogAuditoria(long idUsuario, String acao, String descricao){
         this.idUsuario = idUsuario;
         this.acao = acao;
         this.descricao = descricao;
@@ -25,7 +25,7 @@ public class LogAuditoria {
         
     }
     
-    public LogAuditoria(int idUsuario, String acao, String descricao, LocalDateTime dataHora){
+    public LogAuditoria(long idUsuario, String acao, String descricao, LocalDateTime dataHora){
         this.idUsuario = idUsuario;
         this.acao = acao;
         this.descricao = descricao;
@@ -36,7 +36,7 @@ public class LogAuditoria {
         return id;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
