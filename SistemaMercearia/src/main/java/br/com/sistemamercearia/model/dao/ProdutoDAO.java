@@ -55,12 +55,11 @@ public class ProdutoDAO {
     }
   }
 
-  public Produto buscarPorCodigoELote(String codigo, String lote) {
-    String sql = "SELECT * FROM Produto WHERE codigo_de_barras = ? AND lote = ?";
+  public Produto buscarPorCodigo(String lote) {
+    String sql = "SELECT * FROM Produto WHERE lote = ?";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-      stmt.setString(1, codigo);
-      stmt.setString(2, lote);
+      stmt.setString(1, lote);
 
       try (ResultSet rs = stmt.executeQuery()) {
         if (rs.next()) {
