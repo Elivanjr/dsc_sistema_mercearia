@@ -4,7 +4,7 @@
  */
 package br.com.sistemamercearia.model.entity;
 
-import br.com.sistemamercearia.model.enums.FormaPagamento;
+import br.com.sistemamercearia.model.enums.FormaPagamentoFiado;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +16,7 @@ public class PagamentoFiado {
     private int idNotaFiado;
     private LocalDateTime dataHoraPagamento;
     private Double valorPago;
-    private FormaPagamento metodoPagamento;
+    private FormaPagamentoFiado metodoPagamento;
 
     public int getId() {
         return id;
@@ -50,11 +50,11 @@ public class PagamentoFiado {
         this.valorPago = valorPago;
     }
 
-    public FormaPagamento getMetodoPagamento() {
+    public FormaPagamentoFiado getMetodoPagamento() {
         return metodoPagamento;
     }
 
-    public void setMetodoPagamento(FormaPagamento metodoPagamento) {
+    public void setMetodoPagamentoFiado(FormaPagamentoFiado metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
     }
 }
