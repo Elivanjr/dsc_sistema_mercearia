@@ -21,12 +21,12 @@ public class ClienteDAO {
         connection = DatabaseConnection.getConnection();
     }
 
-    public void salvar(Cliente cliente, Endereco endereco) {
+    public void salvar(Cliente cliente) {
         String sql = "INSERT INTO Cliente (diaVencimentoFiado, nome, "
                 + "cpf, telefone, endereco, senha, limiteDeCredito, statusBloqueio)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, cliente.getDiaVencimentoFiado());
             stmt.setString(2, cliente.getNome());
             stmt.setString(3, cliente.getCpf());
@@ -45,7 +45,7 @@ public class ClienteDAO {
     public Cliente buscarPorCpf(String cpf) {
         String sql = "SELECT * FROM Cliente WHERE cpf = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, cpf);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -71,7 +71,7 @@ public class ClienteDAO {
     public void atualizarStatus(long idCliente, boolean bloqueado) {
         String sql = "UPDATE Cliente SET statusBloqueio = ? WHERE id = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setBoolean(1, bloqueado);
             stmt.setLong(2, idCliente);
 
