@@ -17,6 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -40,7 +45,7 @@ public class CaixaDAO {
         """;
     try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-      stmt.setLong(1, caixa.getUsuarioAbertura());
+      stmt.setLong(1, caixa.getIdUsuarioAbertura());
       stmt.setTimestamp(2, Timestamp.valueOf(caixa.getDataHoraAbertura()));
       stmt.setDouble(3, caixa.getValorTrocoInicial());
       stmt.setString(4, caixa.getStatusCaixa().name());
@@ -123,6 +128,40 @@ public class CaixaDAO {
       throw new RuntimeException("Erro ao buscar caixa aberto.", e);
     }
     return null;
+  }
+
+  public List<MovimentacaoCaixa> listarMovimentacoes(long idCaixa, LocalDate data) {
+    List<MovimentacaoCaixa> movimentacoes = new ArrayList<>();
+
+    String sql = """
+        SELECT * FROM MovimentacaoCaixa
+        WHERE id_caixa = ?
+        AND DATE(data_hora_movimentacao) = ?
+        ORDER BY data_hora_movimentacao ASC
+        """;
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+      stmt.setLong(1, idCaixa);
+      stmt.setDate(2, Date.valueOf(data));
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+          MovimentacaoCaixa mov = new MovimentacaoCaixa();
+          mov.setId(rs.getLong("id"));
+          mov.setIdCaixa(rs.getLong("id_caixa"));
+          mov.setTipoMovimentacao(TipoMovimentacao.valueOf(rs.getString("tipo")));
+          mov.setValor(rs.getDouble("valor"));
+          mov.setOrigem(OrigemMovimentacao.valueOf(rs.getString("origem")));
+          mov.setDescricao(rs.getString("descricao"));
+          mov.setDataHoraMovimentacao(rs.getTimestamp("data_hora_movimentacao").toLocalDateTime());
+          movimentacoes.add(mov);
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Erro ao buscar movimentações.", e);
+    }
+
+    return movimentacoes;
   }
 
   public void fecharConexao() {
