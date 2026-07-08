@@ -5,6 +5,7 @@
 package br.com.sistemamercearia.model.entity;
 
 import br.com.sistemamercearia.model.enums.PerfilUsuario;
+import br.com.sistemamercearia.util.CriptografiaUtil;
 
 /**
  *
@@ -55,10 +56,14 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.senha = CriptografiaUtil.gerarHash(senha);
     }
     
     public boolean isGerente(){
         return this.perfilUsuario == PerfilUsuario.GERENTE;
+    }
+    
+    public boolean senhaCorreta(String senhaInformada){
+        return CriptografiaUtil.senhaCorreta(senhaInformada, this.senha);
     }
 }

@@ -25,10 +25,14 @@ public class ProdutoDAO {
   private static final int LIMITE_ESTOQUE_BAIXO = 10;
   private static final int LIMITE_VENCIMENTO_DIAS = 30;
 
-  public ProdutoDAO() throws SQLException {
-    this.connection = DatabaseConnection.getConnection();
-  }
-
+  public ProdutoDAO() {
+    try {
+        this.connection = DatabaseConnection.getConnection();
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
+    }
+}
+  
   public void salvar(Produto produto) {
     String sql = """
         INSERT INTO Produto
@@ -55,7 +59,7 @@ public class ProdutoDAO {
     }
   }
 
-  public Produto buscarPorCodigo(String lote) {
+  public Produto buscarPorLote(String lote) {
     String sql = "SELECT * FROM Produto WHERE lote = ?";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -73,15 +77,68 @@ public class ProdutoDAO {
   }
 
   public void atualizarEstoque(long idProduto, long qtdVendida) {
-    String sql = "UPDATE Produto SET quantidade_disponivel = quantidade_disponivel - ? WHERE id = ?";
+      String sql = "UPDATE Produto SET quantidade_disponivel = quantidade_disponivel - ? WHERE id = ?";
 
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-      stmt.setLong(1, qtdVendida);
-      stmt.setLong(2, idProduto);
-      stmt.executeUpdate();
-    } catch (SQLException e) {
-      throw new RuntimeException("Erro ao atualizar estoque", e);
+      try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setLong(1, qtdVendida);
+        stmt.setLong(2, idProduto);
+        stmt.executeUpdate();
+      } catch (SQLException e) {
+        throw new RuntimeException("Erro ao atualizar estoque", e);
+      }
     }
+  
+  public void atualizarInformacoesProduto(long idProduto, Produto p){
+      String sql = """
+            UPDATE produto
+            SET quantidade_disponivel = ?,
+                descricao ?,
+                codigo_barras = ?,
+                lote = ?,
+                unidade_medida = ?,
+                quantidade_medida = ?,
+                data_fabricacao = ?,
+                data_de_validade = ?,
+                preco_unitario = ?
+            WHERE id_produto = ?
+            """;
+      
+      try(PreparedStatement stmt = connection.prepareStatement(sql)){
+          stmt.setLong(1, p.getQuantidadeDisponivel());
+          stmt.setString(2, p.getDescricao());
+          stmt.setString(3, p.getCodigoDeBarras());
+          stmt.setString(4, p.getLote());
+          stmt.setString(5, p.getUnidadeDeMedida().name());
+          stmt.setDouble(6, p.getQuantidadeMedida());
+          stmt.setDate(7, Date.valueOf(p.getDataFabricacao()));
+          stmt.setDate(8, Date.valueOf(p.getDataVencimento()));
+          stmt.setDouble(9, p.getPrecoUnitario());
+          
+          stmt.setLong(10, idProduto);
+          
+          int linhasAfetadas = stmt.executeUpdate();
+          
+          if(linhasAfetadas == 0)
+              throw new RuntimeException("Nenhum produto encontrado com o ID: " + idProduto);
+          
+      }catch(SQLException e){
+          throw new RuntimeException("Erro ao atualizar o produto", e);
+      }  
+  }
+  
+  public void deletarLoteProduto(long idProduto){
+      String sql = "DELETE FROM produto WHERE id_produto = ?";
+      
+      try (PreparedStatement stmt = connection.prepareStatement(sql)){
+          stmt.setLong(1, idProduto);
+          
+          int linhasAfetadas = stmt.executeUpdate();
+          
+          if(linhasAfetadas == 0)
+              throw new RuntimeException("Nenhum produto encontrado com o ID: " + idProduto);
+      }catch(SQLException e){
+          throw new RuntimeException("Erro ao atualizar o produto", e);
+      }
   }
 
   public List<Produto> listarProdutosBaixoEstoque() {
@@ -134,7 +191,7 @@ public class ProdutoDAO {
     Produto produto = new Produto();
 
     produto.setId(rs.getLong("id"));
-    produto.setQuantidadeDisponivel(rs.getLong("quantidade_disponivel"));
+    produto.setQuantidadeDisponivel(rs.getInt("quantidade_disponivel"));
     produto.setDescricao(rs.getString("descricao"));
     produto.setCodigoDeBarras(rs.getString("codigo_de_barras"));
     produto.setLote(rs.getString("lote"));

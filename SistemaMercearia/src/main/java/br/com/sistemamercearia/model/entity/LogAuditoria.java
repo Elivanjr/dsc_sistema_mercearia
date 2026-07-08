@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author gabriel
  */
 public class LogAuditoria {
-    private int id;
+    private long id;
     private final long idUsuario;
     private final String acao;
     private final String descricao;
@@ -32,7 +32,7 @@ public class LogAuditoria {
         this.dataHora = dataHora;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

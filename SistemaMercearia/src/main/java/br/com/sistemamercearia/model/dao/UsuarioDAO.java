@@ -21,9 +21,14 @@ import java.sql.SQLException;
 public class UsuarioDAO {
   private Connection connection;
 
-  public UsuarioDAO() throws SQLException {
-    connection = DatabaseConnection.getConnection();
-  }
+  public UsuarioDAO() {
+    try {
+            this.connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            // Registra o erro e interrompe a execução de forma limpa
+            throw new RuntimeException("Falha crítica ao conectar com o banco de dados no DAO.", e);
+        }
+    }
 
   public void salvar(Usuario usuario) throws SQLException {
     if (usuario == null) {

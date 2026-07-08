@@ -12,25 +12,25 @@ import java.time.LocalDateTime;
  * @author gabriel
  */
 public class PagamentoFiado {
-    private int id;
-    private int idNotaFiado;
+    private long id;
+    private long idNotaFiado;
     private LocalDateTime dataHoraPagamento;
     private Double valorPago;
     private FormaPagamentoFiado metodoPagamento;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getIdNotaFiado() {
+    public long getIdNotaFiado() {
         return idNotaFiado;
     }
 
-    public void setIdNotaFiado(int idNotaFiado) {
+    public void setIdNotaFiado(long idNotaFiado) {
         this.idNotaFiado = idNotaFiado;
     }
 

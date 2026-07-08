@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class Produto {
     private long id;
-    private long quantidadeDisponivel;
+    private int quantidadeDisponivel;
     private String descricao;
     private String codigoDeBarras;
     private String lote;
@@ -48,11 +48,11 @@ public class Produto {
         this.id = id;
     }
 
-    public long getQuantidadeDisponivel() {
+    public int getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
 
-    public void setQuantidadeDisponivel(long quantidadeDisponivel) {
+    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 

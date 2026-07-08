@@ -25,25 +25,17 @@ public class Venda {
     private StatusVenda status;
     private List<ItemVenda> itens;
 
-    public Venda(long idUsuario, long idCliente, long idCaixa) {
+    public Venda(long idUsuario, long idCaixa) {
         this.idUsuario = idUsuario;
-        this.idCliente = idCliente;
         this.idCaixa = idCaixa;
-        this.dataHora = LocalDateTime.now();
-        this.valorTotal = 0.0;
+        this.status = StatusVenda.EM_ANDAMENTO;
         this.itens = new ArrayList<>();
     }
 
-    public Venda(long id, LocalDateTime dataHora, long idUsuario, long idCliente, long idCaixa, Double valorTotal, FormaPagamento formaDePagamento, StatusVenda status, List<ItemVenda> itens) {
-        this.id = id;
-        this.dataHora = dataHora;
-        this.idUsuario = idUsuario;
-        this.idCliente = idCliente;
-        this.idCaixa = idCaixa;
-        this.valorTotal = valorTotal;
-        this.formaDePagamento = formaDePagamento;
-        this.status = status;
-        this.itens = itens;
+    public void adicionarItem(ItemVenda item){
+        if(this.itens == null)
+           this.itens = new ArrayList<>();
+        this.itens.add(item);
     }
     
     public Double getValorTotal() {
@@ -121,7 +113,7 @@ public class Venda {
     public Double calcularSubtotalFinal(){
         Double valor = 0.0;
         for(ItemVenda item : this.itens)
-            valor += item.getSubtotal();
+            valor += item.calculaSubtotal();
         return valor;
     }
     

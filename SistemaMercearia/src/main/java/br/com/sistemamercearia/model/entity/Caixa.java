@@ -19,7 +19,7 @@ public class Caixa {
     private Double valorTrocoInicial;
     private StatusCaixa statusCaixa;
     private Double saldoMinimoProximoDia;
-
+    
     public void setStatusCaixa(StatusCaixa statusCaixa) {
         this.statusCaixa = statusCaixa;
     }

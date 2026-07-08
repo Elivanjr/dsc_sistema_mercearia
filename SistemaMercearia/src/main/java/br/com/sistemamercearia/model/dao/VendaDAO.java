@@ -91,7 +91,7 @@ public class VendaDAO {
                     stmtItem.setLong(2, item.getIdProduto());
                     stmtItem.setLong(3, item.getQuantidade());
                     stmtItem.setDouble(4, item.getPrecoUnitario());
-                    stmtItem.setDouble(5, item.getSubtotal());
+                    stmtItem.setDouble(5, item.calculaSubtotal());
 
                     stmtItem.addBatch();
                 }

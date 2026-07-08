@@ -78,7 +78,6 @@ public class QRCodeUtil {
             TAMANHO_PADRAO_QRCODE, 
             TAMANHO_PADRAO_QRCODE
         );
-        
         File arquivo = new File(caminhoArquivo);
         com.google.zxing.client.j2se.MatrixToImageWriter.writeToPath(bitMatrix, "PNG", arquivo.toPath());
     }

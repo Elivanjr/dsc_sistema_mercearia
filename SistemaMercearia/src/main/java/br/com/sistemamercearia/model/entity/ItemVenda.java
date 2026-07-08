@@ -9,38 +9,44 @@ package br.com.sistemamercearia.model.entity;
  * @author gabriel
  */
 public class ItemVenda {
-    private int id;
-    private int idVenda;
-    private int idProduto;
+    private long id;
+    private long idVenda;
+    private long idProduto;
     private int quantidade;
     private Double precoUnitario;
-    private Double subtotal;
 
-    public int getId() {
+    public ItemVenda(long idVenda, long idProduto, int quantidade, Double precoUnitario) {
+        this.idVenda = idVenda;
+        this.idProduto = idProduto;
+        this.quantidade = quantidade;
+        this.precoUnitario = precoUnitario;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getIdVenda() {
+    public long getIdVenda() {
         return idVenda;
     }
 
-    public void setIdVenda(int idVenda) {
+    public void setIdVenda(long idVenda) {
         this.idVenda = idVenda;
     }
 
-    public int getIdProduto() {
+    public long getIdProduto() {
         return idProduto;
     }
 
-    public void setIdProduto(int idProduto) {
+    public void setIdProduto(long idProduto) {
         this.idProduto = idProduto;
     }
 
-    public int getQuantidade() {
+    public long getQuantidade() {
         return quantidade;
     }
 
@@ -56,11 +62,7 @@ public class ItemVenda {
         this.precoUnitario = precoUnitario;
     }
 
-    public Double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public Double calculaSubtotal(){
+        return this.quantidade * this.precoUnitario;
     }
 }

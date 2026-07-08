@@ -10,5 +10,6 @@ package br.com.sistemamercearia.model.enums;
  */
 public enum StatusVenda {
     CONCLUIDA,
+    EM_ANDAMENTO,
     CANCELADA
 }
